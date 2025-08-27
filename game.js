@@ -10,7 +10,7 @@ class MainScene extends Phaser.Scene {
     this.pieceType = mode; // 初期モードを選択
     this.graphics = null;
     this.dropTimer = 0; // 追加: 落下タイマー
-    this.dropInterval = 500; // 追加: 落下間隔（ミリ秒、遅くしたい場合は値を大きく）
+    this.dropInterval = 2000; // 追加: 落下間隔（ミリ秒、遅くしたい場合は値を大きく）
   }
 
   preload() {
