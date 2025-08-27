@@ -159,10 +159,10 @@ const config = {
   height: FIELD_HEIGHT * CELL_SIZE,
   backgroundColor: '#222',
   scene: MainScene,
-  parent: 'game-container' // 追加: canvasの表示先
+  parent: 'game-container' // ここを追加
 };
 
-// ゲーム開始関数をwindowに登録
+// スタートボタンから呼び出される関数
 window.startPhaserGame = () => {
   if (!window._phaserGame) {
     window._phaserGame = new Phaser.Game(config);
