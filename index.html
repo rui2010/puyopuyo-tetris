@@ -8,8 +8,23 @@
   <style>
     body { margin: 0; background: #222; }
     canvas { display: block; margin: 0 auto; }
+    #title { color: #fff; text-align: center; font-size: 2em; margin-top: 40px; }
+    #start-btn { display: block; margin: 30px auto; font-size: 1.2em; padding: 10px 40px; }
   </style>
 </head>
 <body>
+  <div id="title">ぷよぷよテトリス</div>
+  <button id="start-btn">スタート</button>
+  <!-- ゲーム開始前はcanvas非表示 -->
+  <div id="game-container" style="display:none;"></div>
+  <script>
+    document.getElementById('start-btn').onclick = function() {
+      document.getElementById('title').style.display = 'none';
+      document.getElementById('start-btn').style.display = 'none';
+      document.getElementById('game-container').style.display = 'block';
+      // Phaserのcanvasをgame-containerに追加
+      window.startPhaserGame && window.startPhaserGame();
+    };
+  </script>
 </body>
 </html>
