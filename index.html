@@ -9,21 +9,44 @@
     body { margin: 0; background: #222; }
     canvas { display: block; margin: 0 auto; }
     #title { color: #fff; text-align: center; font-size: 2em; margin-top: 40px; }
+    #mode-select { text-align: center; margin: 20px 0; }
+    .mode-btn { font-size: 1em; padding: 8px 24px; margin: 0 10px; }
     #start-btn { display: block; margin: 30px auto; font-size: 1.2em; padding: 10px 40px; }
   </style>
 </head>
 <body>
   <div id="title">ぷよぷよテトリス</div>
+  <div id="mode-select">
+    <button class="mode-btn" id="puyo-btn">ぷよぷよ</button>
+    <button class="mode-btn" id="tetris-btn">テトリス</button>
+  </div>
   <button id="start-btn">スタート</button>
   <!-- ゲーム開始前はcanvas非表示 -->
   <div id="game-container" style="display:none;"></div>
   <script>
+    window.selectedMode = 'puyo'; // デフォルト
+
+    document.getElementById('puyo-btn').onclick = function() {
+      window.selectedMode = 'puyo';
+      document.getElementById('puyo-btn').style.background = '#ffccdd';
+      document.getElementById('tetris-btn').style.background = '';
+    };
+    document.getElementById('tetris-btn').onclick = function() {
+      window.selectedMode = 'tetris';
+      document.getElementById('tetris-btn').style.background = '#ccffff';
+      document.getElementById('puyo-btn').style.background = '';
+    };
+
+    // 初期選択色
+    document.getElementById('puyo-btn').style.background = '#ffccdd';
+
     document.getElementById('start-btn').onclick = function() {
       document.getElementById('title').style.display = 'none';
+      document.getElementById('mode-select').style.display = 'none';
       document.getElementById('start-btn').style.display = 'none';
       document.getElementById('game-container').style.display = 'block';
       // Phaserのcanvasをgame-containerに追加
-      window.startPhaserGame && window.startPhaserGame();
+      window.startPhaserGame && window.startPhaserGame(window.selectedMode);
     };
   </script>
 </body>

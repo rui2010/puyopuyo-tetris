@@ -3,12 +3,14 @@ const FIELD_WIDTH = 10;
 const FIELD_HEIGHT = 20;
 
 class MainScene extends Phaser.Scene {
-  constructor() {
+  constructor(mode = 'puyo') {
     super('MainScene');
     this.field = [];
     this.currentPiece = null;
-    this.pieceType = 'tetris'; // 'puyo' or 'tetris'
+    this.pieceType = mode; // 初期モードを選択
     this.graphics = null;
+    this.dropTimer = 0; // 追加: 落下タイマー
+    this.dropInterval = 500; // 追加: 落下間隔（ミリ秒、遅くしたい場合は値を大きく）
   }
 
   preload() {
@@ -112,13 +114,17 @@ class MainScene extends Phaser.Scene {
     this.spawnPiece();
   }
 
-  update() {
-    // ピース落下
+  update(time, delta) {
+    // ピース落下（タイマー制御）
     if (this.currentPiece) {
-      if (this.canMove(this.currentPiece.x, this.currentPiece.y + 1, this.currentPiece.shape)) {
-        this.currentPiece.y += 1;
-      } else {
-        this.placePiece();
+      this.dropTimer += delta;
+      if (this.dropTimer >= this.dropInterval) {
+        if (this.canMove(this.currentPiece.x, this.currentPiece.y + 1, this.currentPiece.shape)) {
+          this.currentPiece.y += 1;
+        } else {
+          this.placePiece();
+        }
+        this.dropTimer = 0;
       }
     }
 
@@ -158,13 +164,13 @@ const config = {
   width: FIELD_WIDTH * CELL_SIZE,
   height: FIELD_HEIGHT * CELL_SIZE,
   backgroundColor: '#222',
-  scene: MainScene,
-  parent: 'game-container' // ここを追加
+  scene: null, // 後でセット
+  parent: 'game-container'
 };
 
-// スタートボタンから呼び出される関数
-window.startPhaserGame = () => {
+window.startPhaserGame = (mode = 'puyo') => {
   if (!window._phaserGame) {
+    config.scene = new MainScene(mode);
     window._phaserGame = new Phaser.Game(config);
   }
 };
