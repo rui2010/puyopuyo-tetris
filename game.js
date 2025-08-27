@@ -1,4 +1,3 @@
-```javascript
 const CELL_SIZE = 32;
 const FIELD_WIDTH = 10;
 const FIELD_HEIGHT = 20;
@@ -9,6 +8,7 @@ class MainScene extends Phaser.Scene {
     this.field = [];
     this.currentPiece = null;
     this.pieceType = 'tetris'; // 'puyo' or 'tetris'
+    this.graphics = null;
   }
 
   preload() {
@@ -25,6 +25,9 @@ class MainScene extends Phaser.Scene {
     }
     // 最初のピース生成
     this.spawnPiece();
+
+    // 描画用graphics初期化
+    this.graphics = this.add.graphics();
 
     // キーボード入力
     this.cursors = this.input.keyboard.createCursorKeys();
@@ -125,8 +128,7 @@ class MainScene extends Phaser.Scene {
   }
 
   drawField() {
-    this.graphics?.clear();
-    if (!this.graphics) this.graphics = this.add.graphics();
+    this.graphics.clear();
     for (let y = 0; y < FIELD_HEIGHT; y++) {
       for (let x = 0; x < FIELD_WIDTH; x++) {
         if (this.field[y][x]) {
@@ -160,4 +162,3 @@ const config = {
 };
 
 new Phaser.Game(config);
-```
